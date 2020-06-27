@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Assignment</title>
+        <script src="./check.js"></script>
+    </head>
+    <body>
+        <h4>Assignment for Mastercard (Yang Wang)</h4>
+        <h5>## >>>>>>>   Login Page  <<<<<<<</h5>
+        <h6>#### Security Design: User(1) -> Role(n) -> Permission(m)</h6>
+        <h6>###### User:wangyang Pass:wangyang-> role:admin -> permission: all functions</h6>
+        <h6>###### User:yang Pass:yang-> role:view -> permission: only function 1</h6>
+        <h6>###### User:wang Pass:wang-> role:add -> permission: function 1 + 2</h6>
+        <h6>###### SQL: <a href="/jersey/sql">userRolePermission.sql</a></h6>
+
+        <form onsubmit="return checkUser()" id="form" method="get" action="/jersey/doLogin">
+            <label>USER: </label><input type="text" id="USERID" , name="USERID" th:value="${USERID}">
+            <br>
+            <label>PASS: </label><input type="text" id="PASS" , name="PASS" th:value="${PASS}" >
+            <br>
+            <br>
+            <button type="submit" id="submit">Login</button>
+        </form>
+    </body>
+</html>
