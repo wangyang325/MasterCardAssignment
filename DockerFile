@@ -1,0 +1,4 @@
+FROM openjdk:8-alpine
+VOLUME /tmp
+ADD target/jersey-store-1.0.jar MasterCard.jar
+ENTRYPOINT ["java","-jar","MasterCard.jar"]

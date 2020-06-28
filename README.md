@@ -1,4 +1,4 @@
-## -------------------------  MasterCard Assignment (Requirements) ------------------------- ##
+######  MasterCard Assignment (Requirements) ------------
 # Jersey Store
 
 Jersey Store® is a hip new business that specializes in the trade of soccer jerseys (how cool is that!).
@@ -41,7 +41,7 @@ You are free to use any library you want to get the job done.
 * **Threading:** The SalesServiceTest is currently failing. The total sales don't match what is expected. Can you fix the issue?
   * The method can be rewritten as you see fit.
   
-## -------------------------  MasterCard Assignment (implementation by Yang Wang) ------------------------- ##
+######  MasterCard Assignment (implementation by Yang Wang) 
 
 ### Deploy on Aws by using docker
 
@@ -108,11 +108,11 @@ You are free to use any library you want to get the job done.
       
       # Solution: 
       
-        Use the Redis' s transaction (One thread) to solve the high concurrency problem. 
+        Use the Redis' s transaction and lua script to solve the high concurrency problem. 
         
       # Problem:
       
-        The Redis cannot ensure the huge high concurrency, to solve the problem can import the message queue.
+        The Redis cannot ensure the huge high concurrency, to solve the problem can use the message queue.
         (Not implement)  
        
       # Function implementation: 
