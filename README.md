@@ -61,13 +61,13 @@ Springboot + Mysql + Redis on AWS (Linux: docker)
    
       ### Key issue: 
       
-        When the csv is huge, using to much memory.
+        When the CSV is huge, using too much memory.
         
         The file exist the same key records.
        
       ### Solution:
       
-        Read the file by cache, merge the same key records into one record to reduce the using memory. 
+        Read the file by cache, merge the same key records into one record to reduce using of memory. 
       
       ### Problem:
       
@@ -88,13 +88,13 @@ Springboot + Mysql + Redis on AWS (Linux: docker)
       
       ### Key issue: 
         
-        When the cvs file is huge, a part of data may be updated failed. How to keep the consistency is a problem.
+        When the cvs file is huge, a part of data may be updated failed. How to keep consistency is a problem.
         
       ### Solution:
       
         Use the transaction to manage the updating.
         
-        Use the batchUpdate to improve the efficency. (Not implement) 
+        Use the batchUpdate to improve the efficiency. (Not implement) 
         
       ### Function implementation: 
       
@@ -108,32 +108,46 @@ Springboot + Mysql + Redis on AWS (Linux: docker)
       
       ### Key issue: 
       
-        When multiple microservices and processes update the same data (Total sales), keeping the consistency is a problem.
+        When multiple microservices and processes update the same data (Total sales), keeping consistency is a problem.
       
       ### Solution: 
       
-        Use the Redis' s transaction and lua script to solve the high concurrency problem. 
+        Distributed Lock: (Redis + Lua) <- chose
+           
+           Use the Redis' s transaction and lua script to solve the high concurrency problem. 
+           
+           The provided solution has passed the 1000-thread test.
+        
+        Other solutions:
+        
+          1. Possitive lock: 
+           
+             Add a version column, before updating the data, check the version (timestamp). -> High IO for database
+        
+          2. Negative Lock: 
+           
+             use for update to lock the row that needs to update. -> easier to be a dead lock 
         
       ### Problem:
       
-        The Redis cannot ensure the huge high concurrency, to solve the problem can use the message queue.
+        The Redis cannot ensure the huge high concurrency, to solve the problem can use the message queue (Kafka or others).
         (Not implement)  
        
       ### Function implementation: 
       
-        display all stock info of jersey on the index web page, 
+        1. display all stock info of jersey on the index web page.
        
-        input the id and amount to buy the jersey, check the stock,
+        2. input the id and amount to buy the jersey, check the stock.
        
-        if amount > stock -> failed to buy, 
+        3. if amount > stock -> failed to buy, 
        
-        if amount <= stock -> deduct the amount from stock and increase the total sales. 
+           if amount <= stock -> deduct the amount from stock and increase the total sales. 
     
    d) Permission management: (User -> SysRole -> SysPermission)
    
       ### Key issue: 
       
-        How to manage the user authority info
+        How to manage the user authority info.
         
         How to limit the calls between the microservices.
         
@@ -141,11 +155,11 @@ Springboot + Mysql + Redis on AWS (Linux: docker)
       
       ### Solution: 
       
-        Use the Shiro to make the token and check user.
+        Use the Shiro to make the token and check user. 
         
-        Use the Shiro to limit the access of restful api.
+        Use the Shiro to limit the access of restful api. [@RequiresPermissions]
         
-        Use the session (store into Redis) to share the token and user info.
+        Use the session (store into Redis) to share the token and user info between the microservices.
         
         Use the user -> role -> permission model to implement the permission management.
         
@@ -219,9 +233,14 @@ Springboot + Mysql + Redis on AWS (Linux: docker)
   
     1. Permission management.
     
-    2. Use API Gateway to protect all microservices in the private network.  (Not implement, but can find the sample in my github)
+    2. Use API Gateway (Sring cloud) to protect all microservices in the private network.  (Not implement, but can find the sample in my github)
     
-    3. Use the eureka service to manage the microservices. (Not implement, but can find the sample in my github)
+    3. Use the eureka services (Spring cloud) to manage the microservices (cluser). (Not implement, but can find the sample in my github)
     
+    4. Use a cluser of Redis and Mysql.
+    
+    5. Use different available zones (AWS) at different physical locations.
+    
+    6. Put the private services into different private subnet (AWS) to avoid accessing from the internet.   
     
      

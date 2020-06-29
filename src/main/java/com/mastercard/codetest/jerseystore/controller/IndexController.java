@@ -125,13 +125,12 @@ public class IndexController {
      */
     @RequestMapping(value = "/jersey/doLogout", method = RequestMethod.GET)
     public void logout(HttpServletResponse response, HttpSession session) {
-        // Logout
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
         // Clear session and go to login page
         try {
-            session.setAttribute("UsernamePasswordToken", null);
-            session.setAttribute("UserId", null);
+            // Logout
+            Subject subject = SecurityUtils.getSubject();
+            subject.logout();
+            // move to login page
             response.sendRedirect("/jersey/login");
         } catch (Exception e) {
             e.printStackTrace();
