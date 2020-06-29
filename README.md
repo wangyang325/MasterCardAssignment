@@ -41,11 +41,15 @@ You are free to use any library you want to get the job done.
 * **Threading:** The SalesServiceTest is currently failing. The total sales don't match what is expected. Can you fix the issue?
   * The method can be rewritten as you see fit.
   
-######  MasterCard Assignment (implementation by Yang Wang) 
+#  MasterCard Assignment (implementation by Yang Wang) 
 
-### Deploy on Aws by using docker
+## Deploy on Aws by using docker
 
-### Function Implementation Summary
+Demo:  http://34.247.85.101/jersey/login
+
+Springboot + Mysql + Redis on AWS (Linux: docker)  
+
+## Function Implementation Summary
 
 1. Add two web pages (Index and Login) to collect the input data.
 
@@ -55,22 +59,22 @@ You are free to use any library you want to get the job done.
 
    a) Check Csv and database: The function simulates making an inventory.
    
-      # Key issue: 
+      ### Key issue: 
       
         When the csv is huge, using to much memory.
         
         The file exist the same key records.
        
-      # Solution:
+      ### Solution:
       
         Read the file by cache, merge the same key records into one record to reduce the using memory. 
       
-      # Problem:
+      ### Problem:
       
         When the file is huge, because put all records into memory that may cause the out of memory error.
         Dividing the records into parts and reading by parts (flush the memory) is necessary.
         
-      # Function implementation: 
+      ### Function implementation: 
       
         Read the csv data, use the all columns (except Amount column) as key to check the database,
       
@@ -82,17 +86,17 @@ You are free to use any library you want to get the job done.
       
    b) Update database based csv: the function simulates updating the product and stock info by reading Csv.
       
-      # Key issue: 
+      ### Key issue: 
         
         When the cvs file is huge, a part of data may be updated failed. How to keep the consistency is a problem.
         
-      # Solution:
+      ### Solution:
       
         Use the transaction to manage the updating.
         
         Use the batchUpdate to improve the efficency. (Not implement) 
         
-      # Function implementation: 
+      ### Function implementation: 
       
         Read the csv data, use the all columns (except Amount column) as key to check the database,
        
@@ -102,20 +106,20 @@ You are free to use any library you want to get the job done.
     
    c) Sales: the function simulates selling the Jersey and Checking total sales.
       
-      # Key issue: 
+      ### Key issue: 
       
         When multiple microservices and processes update the same data (Total sales), keeping the consistency is a problem.
       
-      # Solution: 
+      ### Solution: 
       
         Use the Redis' s transaction and lua script to solve the high concurrency problem. 
         
-      # Problem:
+      ### Problem:
       
         The Redis cannot ensure the huge high concurrency, to solve the problem can use the message queue.
         (Not implement)  
        
-      # Function implementation: 
+      ### Function implementation: 
       
         display all stock info of jersey on the index web page, 
        
@@ -127,7 +131,7 @@ You are free to use any library you want to get the job done.
     
    d) Permission management: (User -> SysRole -> SysPermission)
    
-      # Key issue: 
+      ### Key issue: 
       
         How to manage the user authority info
         
@@ -135,7 +139,7 @@ You are free to use any library you want to get the job done.
         
         How to share the token info between the microservices.
       
-      # Solution: 
+      ### Solution: 
       
         Use the Shiro to make the token and check user.
         
@@ -145,13 +149,13 @@ You are free to use any library you want to get the job done.
         
         Use the user -> role -> permission model to implement the permission management.
         
-      # Function implementation:
+      ### Function implementation:
       
         Login: check the input data and create token, save the info into session (Redis).
        
         API permission: use the token to check the permission before accessing the restful API.
 
-### Task 1: * Finish the CRUD API for the JerseyController.
+## Task 1: * Finish the CRUD API for the JerseyController.
 
 1. ./controller/IndexController:
 
@@ -187,15 +191,15 @@ You are free to use any library you want to get the job done.
       
       b) update the total amount.
 
-### Task 2: * Fix the code on the File Loader.
+## Task 2: * Fix the code on the File Loader.
 
 1. Read the file by using cache.
 
 2. Provided some solutions.
 
-### Task 3: * Versioning. (not implement)
+## Task 3: * Versioning. (not implement)
 
-  # Solution:
+  ### Solution:
     
     1. Java: 
        
@@ -209,9 +213,9 @@ You are free to use any library you want to get the job done.
        
        Prepare two versions.
 
-### Task 4: * Security.
+## Task 4: * Security.
   
-  # Solution: 
+  ### Solution: 
   
     1. Permission management.
     
